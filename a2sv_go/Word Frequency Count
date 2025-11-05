@@ -1,0 +1,22 @@
+package main
+
+import "fmt"
+
+func word_freq(word string) map[string]int {
+	dic := make(map[string]int)
+	for i := 0; i < len(word); i++ {
+		ch := string(word[i])
+		_, ok := dic[ch]
+		if ok {
+			dic[ch] += 1
+		} else {
+			dic[ch] = 1
+		}
+
+	}
+	return dic
+}
+
+func main() {
+	fmt.Println(word_freq("hello"))
+}
