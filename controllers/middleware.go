@@ -8,8 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 	jwt "github.com/golang-jwt/jwt/v4"
 )
-
-// Use the same JWT secret as in your data package
 var jwtSecret = []byte("your_jwt_secret")
 
 func AuthMiddleware() gin.HandlerFunc {
