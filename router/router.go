@@ -9,11 +9,23 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	r.GET("/tasks", controllers.GetAll)
-	r.GET("/tasks/:id", controllers.GetByID)
-	r.POST("/tasks", controllers.Create)
-	r.PUT("/tasks/:id", controllers.Update)
-	r.DELETE("/tasks/:id", controllers.Delete)
+	r.POST("/tasks/register", controllers.Register)
+	r.POST("/tasks/login", controllers.Login)
+	taskRoutes := r.Group("/tasks")
+	taskRoutes.Use(controllers.AuthMiddleware())
+	{
+		taskRoutes.GET("", controllers.GetAll)
+		taskRoutes.GET("/:id", controllers.GetByID)
+		taskRoutes.POST("", controllers.Create)
+		taskRoutes.PUT("/:id", controllers.Update)
+		taskRoutes.DELETE("/:id", controllers.Delete)
+	}
+	userRoutes := r.Group("/users")
+	userRoutes.Use(controllers.AuthMiddleware())
+	{
+		userRoutes.GET("", controllers.GetAllusers)
+		userRoutes.DELETE("/:email", controllers.Deleteuser)
+	}
 
 	return r
 }
